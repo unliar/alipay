@@ -4,8 +4,6 @@ import (
 	"crypto/rsa"
 	"fmt"
 	"github.com/google/go-querystring/query"
-	"github.com/unliar/alipay/constans"
-	"github.com/unliar/alipay/types"
 	"time"
 )
 
@@ -22,17 +20,17 @@ type Client struct {
 
 // 预下单接口
 func (c *Client) TradePreCreate() {
-	v := types.PublicRequest{
+	v := PublicRequest{
 		AppID:     c.AppID,
-		Method:    constans.AlipayTradePrecreateMethodName,
-		Format:    constans.DefaultFormat,
-		Charset:   constans.DefaultCharset,
+		Method:    AlipayTradePrecreateMethodName,
+		Format:    DefaultFormat,
+		Charset:   DefaultCharset,
 		SignType:  "RSA2",
 		Sign:      "",
-		Timestamp: time.Now().Format(constans.DefaultTimeFormat),
-		Version:   constans.DefaultVersion,
+		Timestamp: time.Now().Format(DefaultTimeFormat),
+		Version:   DefaultVersion,
 		NotifyURL: "https://happysooner.com/api/v1/pay/alipay/hook",
-		BizContent: &types.FaceToFacePayRequest{
+		BizContent: &FaceToFacePayRequest{
 			OutTradeNo:  "d88da8d8ad8a8d8a8d8",
 			Subject:     "测试支付",
 			TotalAmount: "1.11",

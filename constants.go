@@ -1,4 +1,4 @@
-package constans
+package alipay
 
 // 统一收单线下交易预创 请求地址
 const AlipayTradePrecreateURL = "https://openapi.alipay.com/gateway.do"

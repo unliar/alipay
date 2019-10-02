@@ -1,0 +1,36 @@
+package alipay
+
+import (
+	"fmt"
+	"testing"
+)
+
+// 私钥
+func TestConvertStrToPKCS1PrivateKey(t *testing.T) {
+	str := `
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEA5W9bEQxWhuVs1Tgaur70tbk1i2wSzHEQGrkK44EVsBh88ZpdcfvcDcYYvbNU1PrDUrb2Qv9PFl769BYAWlkJJv9eAm9VKNDCIGvxlmJTuf8msiX6iHVYzZkLRsn76dtuWxv7tpxs8owo+1R0Ga1RNNZIdUpgjCpnXyJx8LHmGLyKKCWV+lQSvlswFQKgB3k7OkMmdGk4uNgLqP0xqcpHx9B4bmXt8OIqxQGtquOgapykbaUklSVkKsrUY5ztLPbur1SrOg+tcnyYb6MO/2ZLN1EjnCbGqBaY2hb3hz7OAFSgC8rm3yxB0N5XNSkYk0jEMhyyfSLQqxIDCQf5+qZ7IwIDAQABAoIBAFjZ+wZrJMcw6ijYhWF0ugf2JcpMnCsYTghLSPA5+VAs65YVFcMiqmGbKdGtNVkVk7bgrBXeEZ60QbNtIc3bVTQJCTsgKnaYAdXUd8apZYtOSIoNMyzNZQqaDkfnyOsT03TtLVnW0kpMBULvvdaDzEMOCRmDKEif01CAYme4PUeuYIisGeOiUvIgBfMEfERzxwNxS89e5mLDvgUC82guL7aeQSP+j/tLh0Y5zjr5LpVFbZ/qr5iB9XQ8bWV8TdfIKpx+g1/qncDzpGKvmx15xg0G7dYXTKIVzljszVHg+EeUfluK5+d2LHxqm8GOrBUdQcYGNy2mUoDdE0c++7VHkgECgYEA9WCYoFd5EE4uWiMgkl8UbFNtPtoeb3a8CKQWL5F/gQ8kqEK7AhOp95Tiwl9nWLN0VOxmeYvwHMsMFGLgllbDueOBKssq7yXQ1NhpisLzzkVwzY3Dte3G65fyJ48BeU8kHHLmrm3odft2fVYcaqseXpZrIpXiLuBcFQiJAPMbZmMCgYEA714T7w/zbwG3WGVABzFe15/cz8BFe6eZrxchGm7Hh4fARXnnKMTa5HQswOHxwQ29zmwPQ/+hWRBni1TCwtgTeDV7oLn1bhg0xJ3CzF17cycVcaSgchIKb/wHnnpBBV1sAYTd5EFaMG6m1J/h5S8fO2mp7KltF7F1NkzPJvtTVEECgYBRMdOPSyKeSKCB5xnCFYA2kCyYHajwjUOPQGyu9OBSHmas3tfuyf72E+gtFVCnQ0p9R3RpR+r+PBoVLNrQJInDmwqE1JGybLr7k1jpN7VhTg0Tl5NpQfMOxkq02FdOgueaGlNG6MuBLuJ4euQQT+tOtUtiOGKNzGPr+dUL4WXxrQKBgEYKyFh22WvNG8JQ9lhkePUtgSaFg494bn8OjJA4hEhDT97EmgCTAd5BpGrYcq5j//tsIVdrcOIn67SYm9j581CEjeVtJMUPbjluVHcKj7oVYK/9VTmrz8QPAoe8DFSujpEvOOK2wNZVOpoTIr22eTQgaimnNhXtxneaKC+m8S5BAoGAPCOgxYHDnTlDYxEEIjLaQdgRzDySWdmxWIDlkSy55/WW3mhU6CRgNNab0L9XepvJN5ERd4d7mc9aXBcN12wBFSVjx1xVpPyvF5oB0Jp48Y3jWRafYja4pmo2djeKYmy8cuxXFEs4YMxtTOeCz5L7nrr289gmbVWwoBH+2p6MWQ8=
+-----END RSA PRIVATE KEY-----
+`
+	r := ConvertStrToPKCS1PrivateKey(str)
+	if r != nil {
+		fmt.Println("ConvertStrToPKCS1PrivateKey pass")
+		return
+	}
+	t.Errorf("ConvertStrToPKCS1PrivateKey fail")
+}
+
+// 公钥
+func TestConvertStrToPKCS1PublicKey(t *testing.T) {
+	str := `
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5W9bEQxWhuVs1Tgaur70tbk1i2wSzHEQGrkK44EVsBh88ZpdcfvcDcYYvbNU1PrDUrb2Qv9PFl769BYAWlkJJv9eAm9VKNDCIGvxlmJTuf8msiX6iHVYzZkLRsn76dtuWxv7tpxs8owo+1R0Ga1RNNZIdUpgjCpnXyJx8LHmGLyKKCWV+lQSvlswFQKgB3k7OkMmdGk4uNgLqP0xqcpHx9B4bmXt8OIqxQGtquOgapykbaUklSVkKsrUY5ztLPbur1SrOg+tcnyYb6MO/2ZLN1EjnCbGqBaY2hb3hz7OAFSgC8rm3yxB0N5XNSkYk0jEMhyyfSLQqxIDCQf5+qZ7IwIDAQAB
+-----END PUBLIC KEY-----
+`
+	r := ConvertStrToPKCS1PublicKey(str)
+	if r != nil {
+		fmt.Println("ConvertStrToPKCS1PublicKey pass", r)
+		return
+	}
+	t.Error("ConvertStrToPKCS1PublicKey fail")
+}

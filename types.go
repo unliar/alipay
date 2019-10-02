@@ -1,4 +1,4 @@
-package types
+package alipay
 
 import (
 	"crypto"
@@ -35,12 +35,13 @@ type FaceToFacePayRequest struct {
 }
 
 // 转换成 map[string]string
-func (p *PublicRequest) ToMap() map[string]string {
-	var m map[string]string
-	str, _ := json.Marshal(p)
-	_ = json.Unmarshal(str, &m)
-	return m
+func (p *PublicRequest) ToMap() map[string]interface{} {
+	var m map[string]interface{}
 
+	str, _ := json.Marshal(p)
+	bytes := string(str)
+	_ = json.Unmarshal([]byte(string(bytes)), &m)
+	return m
 }
 
 // 普通公钥签名
@@ -54,6 +55,7 @@ func (p *PublicRequest) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppP
 	}
 	sort.Strings(data)
 	signStr := strings.Join(data, "&")
+	fmt.Println(signStr)
 	s := sha256.New()
 	_, err := s.Write([]byte(signStr))
 	if err != nil {
