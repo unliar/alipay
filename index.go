@@ -32,7 +32,7 @@ func (c *Client) TradePreCreate() {
 		Timestamp: time.Now().Format(constans.DefaultTimeFormat),
 		Version:   constans.DefaultVersion,
 		NotifyURL: "https://happysooner.com/api/v1/pay/alipay/hook",
-		BizContent: types.FaceToFacePayRequest{
+		BizContent: &types.FaceToFacePayRequest{
 			OutTradeNo:  "d88da8d8ad8a8d8a8d8",
 			Subject:     "测试支付",
 			TotalAmount: "1.11",
