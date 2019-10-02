@@ -7,9 +7,14 @@ import (
 )
 
 type Client struct {
-	AppID          string          // 应用id
-	AppPrivateKey  *rsa.PrivateKey // 应用私钥
-	AliayPublicKey *rsa.PublicKey  // 支付宝公钥
+	AppID           string         // 应用id
+	AliPayPublicKey *rsa.PublicKey // 支付宝公钥
+	// 普通公钥签名可用
+	AppPrivateKey *rsa.PrivateKey // 应用私钥
+	// 公钥证书可以
+	AppPublicKeyCert    string // app公钥证书
+	AliPayPublicKeyCert string // 支付宝公钥证书
+	AliPayRootCert      string // 支付宝根证书
 }
 
 // 预下单接口
