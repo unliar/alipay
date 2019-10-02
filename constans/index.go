@@ -14,3 +14,6 @@ const DefaultCharset = "utf-8"
 
 // 版本
 const DefaultVersion = "1.0"
+
+// 时间戳格式
+const DefaultTimeFormat = "2006-01-02 15:04:05"
