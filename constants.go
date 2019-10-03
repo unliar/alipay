@@ -1,10 +1,13 @@
 package alipay
 
-// 统一收单线下交易预创 请求地址
-const AlipayTradePrecreateURL = "https://openapi.alipay.com/gateway.do"
+// 统一收单线下请求地址
+const AlipayTradeEndpointURL = "https://openapi.alipay.com/gateway.do"
 
 // 统一收单线下交易预创 接口名称
 const AlipayTradePrecreateMethodName = "alipay.trade.precreate"
+
+// 统一收单线下交易查询  接口名称
+const AlipayTradeQueryMethodName = "alipay.trade.query"
 
 // 格式
 const DefaultFormat = "JSON"

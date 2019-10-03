@@ -21,9 +21,9 @@ type PublicRequestParams struct {
 
 // 商家请求参数
 type BizContentRequestParams struct {
-	OutTradeNo  string `json:"out_trade_no"` // 商户订单ID
-	TotalAmount string `json:"total_amount"` // 总金额
-	Subject     string `json:"subject"`      // 主题
+	OutTradeNo  string `json:"out_trade_no,omitempty"` // 商户订单ID
+	TotalAmount string `json:"total_amount,omitempty"` // 总金额
+	Subject     string `json:"subject,omitempty"`      // 主题
 }
 
 // 请求参数
@@ -56,4 +56,14 @@ type TradePreCreateResponse struct {
 		OutTradeNo string `json:"out_trade_no,omitempty"` // 商家订单号
 		QrCode     string `json:"qr_code,omitempty"`      // 商家订单号
 	} `json:"alipay_trade_precreate_response"`
+}
+
+// 交易结果查询
+type TradeQueryResponse struct {
+	AlipayTradeQueryResponse struct {
+		PublicResponse
+		TradeStatus string `json:"trade_status"`  // 交易状态
+		TotalAmount string `json:"total_amount"`  // 总金额
+		BuyerUserID string `json:"buyer_user_id"` // 买家金额
+	} `json:"alipay_trade_query_response"`
 }

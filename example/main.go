@@ -26,6 +26,7 @@ func main() {
 		AppPrivateKey:   ustring.ConvertStrToPKCS1PrivateKey(AppPrivateKey),
 		NotifyURL:       "https://happysooner.com/api/v1/pay/alipay/hook",
 		SignType:        "RSA2",
+		EndpointURL:     alipay.AlipayTradeEndpointURL,
 	}
 	res, err := c.TradePreCreate(alipay.BizContentRequestParams{
 		OutTradeNo:  "99299dd392ssss392dddd93929iid",
