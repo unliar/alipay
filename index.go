@@ -2,6 +2,7 @@ package alipay
 
 import (
 	"crypto/rsa"
+	"encoding/json"
 	"fmt"
 	ali "github.com/unliar/utils/go/alipay"
 	"github.com/unliar/utils/go/http"
@@ -22,7 +23,7 @@ type Client struct {
 }
 
 // 预下单接口
-func (c *Client) TradePreCreate(p BizContentRequestParams) {
+func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateResponse, error) {
 	v := Params{
 		PublicRequestParams: PublicRequestParams{
 			AppID:     c.AppID,
@@ -49,6 +50,12 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) {
 	mm["sign"] = sign
 	qs := mm.ToQueryString(true, true)
 	url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, qs)
-	res, _ := http.Get(url, nil, nil)
+	res, err := http.Get(url, nil, nil)
 	fmt.Println(res)
+	if err != nil {
+		return &TradePreCreateResponse{}, err
+	}
+	var tpr TradePreCreateResponse
+	_ = json.Unmarshal([]byte(res), &tpr)
+	return &tpr, nil
 }

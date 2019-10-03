@@ -19,6 +19,7 @@ type PublicRequestParams struct {
 	BizContent   string `url:"biz_content" json:"biz_content"`                           // 特定请求参数
 }
 
+// 商家请求参数
 type BizContentRequestParams struct {
 	OutTradeNo  string `json:"out_trade_no"` // 商户订单ID
 	TotalAmount string `json:"total_amount"` // 总金额
@@ -39,4 +40,20 @@ func (p *Params) ToMap() map[string]string {
 	str, _ := json.Marshal(p.PublicRequestParams)
 	_ = json.Unmarshal(str, &m)
 	return m
+}
+
+//------------****响应参数********** ----------------------------------------
+type PublicResponse struct {
+	Code    string `json:"code"`     // 网关返回代码
+	Msg     string `json:"msg"`      // 网关错误信息
+	SubCode string `json:"sub_code"` // 业务返回代码
+	SumMsg  string `json:"sum_msg"`  // 业务返回描述
+}
+
+type TradePreCreateResponse struct {
+	AlipayTradePrecreateResponse struct {
+		PublicResponse
+		OutTradeNo string `json:"out_trade_no,omitempty"` // 商家订单号
+		QrCode     string `json:"qr_code,omitempty"`      // 商家订单号
+	} `json:"alipay_trade_precreate_response"`
 }
