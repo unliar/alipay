@@ -36,13 +36,6 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) {
 		},
 		BizContentRequestParams: p,
 	}
-	////获取签名 旧版
-	//v.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, c.SignType)
-	//// 转为querystring
-	//str := v.toQueryString()
-	//url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, str)
-	//res, _ := http.Get(url, nil, nil)
-	//fmt.Println(res)
 
 	//签名 新版
 	mm := ali.M{}
@@ -52,7 +45,6 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) {
 			mm[k] = v
 		}
 	}
-
 	sign, _ := mm.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, "RSA2")
 	mm["sign"] = sign
 	qs := mm.ToQueryString(true, true)

@@ -1,15 +1,7 @@
 package alipay
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
-	"encoding/base64"
 	"encoding/json"
-	"fmt"
-	"github.com/unliar/utils/go/alipay"
-	"net/url"
-	"sort"
-	"strings"
 )
 
 // 公共请求参数
@@ -47,46 +39,4 @@ func (p *Params) ToMap() map[string]string {
 	str, _ := json.Marshal(p.PublicRequestParams)
 	_ = json.Unmarshal(str, &m)
 	return m
-}
-func (pub *PublicRequestParams) ToMap() map[string]string {
-	var m map[string]string
-	f, _ := json.Marshal(pub)
-	_ = json.Unmarshal(f, &m)
-	return m
-}
-func (pub *PublicRequestParams) toQueryString() string {
-	var data []string
-	for k, v := range pub.ToMap() {
-		if v != "" {
-			data = append(data, fmt.Sprintf("%s=%s", k, v))
-		}
-	}
-	sort.Strings(data)
-	str := strings.Join(data, "&")
-	return str
-}
-
-// 普通公钥签名
-func (p *Params) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppPrivateKey *rsa.PrivateKey, SignType string) {
-	m := p.ToMap()
-	var data []string
-	for k, v := range m {
-		if k != "sign" && v != "" {
-			data = append(data, fmt.Sprintf("%s=%s", k, v))
-		}
-	}
-	sort.Strings(data)
-	signStr := strings.Join(data, "&")
-	fmt.Println("signStr======", signStr)
-	s, cs := alipay.GetSignOpsBySignType("RSA2")
-	_, err := s.Write([]byte(signStr))
-	if err != nil {
-		panic(err)
-	}
-	hashByte := s.Sum(nil)
-	SignByte, err := AppPrivateKey.Sign(rand.Reader, hashByte, cs)
-	if err != nil {
-		panic(err)
-	}
-	p.Sign = url.QueryEscape(base64.StdEncoding.EncodeToString(SignByte))
 }
