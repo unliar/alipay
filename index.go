@@ -90,7 +90,6 @@ func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, err
 	qs := mm.ToQueryString(true, true)
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
 	res, err := http.Get(url, nil, nil)
-	fmt.Println(res)
 	if err != nil {
 		return &TradeQueryResponse{}, err
 	}
