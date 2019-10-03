@@ -1,13 +1,12 @@
 package alipay
 
 import (
-	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
-	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/unliar/utils/go/alipay"
 	"net/url"
 	"sort"
 	"strings"
@@ -68,7 +67,7 @@ func (pub *PublicRequestParams) toQueryString() string {
 }
 
 // 普通公钥签名
-func (p *Params) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppPrivateKey *rsa.PrivateKey) {
+func (p *Params) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppPrivateKey *rsa.PrivateKey, SignType string) {
 	m := p.ToMap()
 	var data []string
 	for k, v := range m {
@@ -78,13 +77,14 @@ func (p *Params) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppPrivateK
 	}
 	sort.Strings(data)
 	signStr := strings.Join(data, "&")
-	s := sha256.New()
+	fmt.Println("signStr======", signStr)
+	s, cs := alipay.GetSignOpsBySignType("RSA2")
 	_, err := s.Write([]byte(signStr))
 	if err != nil {
 		panic(err)
 	}
 	hashByte := s.Sum(nil)
-	SignByte, err := AppPrivateKey.Sign(rand.Reader, hashByte, crypto.SHA256)
+	SignByte, err := AppPrivateKey.Sign(rand.Reader, hashByte, cs)
 	if err != nil {
 		panic(err)
 	}

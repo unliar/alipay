@@ -3,6 +3,7 @@ package alipay
 import (
 	"crypto/rsa"
 	"fmt"
+	ali "github.com/unliar/utils/go/alipay"
 	"github.com/unliar/utils/go/http"
 	"time"
 )
@@ -29,19 +30,33 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) {
 			Format:    DefaultFormat,
 			Charset:   DefaultCharset,
 			SignType:  c.SignType,
-			Sign:      "",
 			NotifyURL: c.NotifyURL,
 			Timestamp: time.Now().Format(DefaultTimeFormat),
 			Version:   DefaultVersion,
 		},
 		BizContentRequestParams: p,
 	}
-	// 获取签名
-	v.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey)
-	// 转为querystring
-	str := v.toQueryString()
-	fmt.Println(str)
-	url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, str)
+	////获取签名 旧版
+	//v.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, c.SignType)
+	//// 转为querystring
+	//str := v.toQueryString()
+	//url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, str)
+	//res, _ := http.Get(url, nil, nil)
+	//fmt.Println(res)
+
+	//签名 新版
+	mm := ali.M{}
+	m := v.ToMap()
+	for k, v := range m {
+		if v != "" {
+			mm[k] = v
+		}
+	}
+
+	sign, _ := mm.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, "RSA2")
+	mm["sign"] = sign
+	qs := mm.ToQueryString(true, true)
+	url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, qs)
 	res, _ := http.Get(url, nil, nil)
 	fmt.Println(res)
 }
