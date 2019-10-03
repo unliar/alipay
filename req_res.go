@@ -14,7 +14,7 @@ import (
 )
 
 // 公共请求参数
-type PublicRequest struct {
+type PublicRequestParams struct {
 	AppID        string `url:"app_id" json:"app_id"`                                     //必填
 	Method       string `url:"method" json:"method"`                                     // 必填
 	Format       string `url:"format,omitempty" json:"format,omitempty"`                 //格式化
@@ -28,7 +28,7 @@ type PublicRequest struct {
 	BizContent   string `url:"biz_content" json:"biz_content"`                           // 特定请求参数
 }
 
-type FaceToFacePayRequest struct {
+type BizContentRequestParams struct {
 	OutTradeNo  string `json:"out_trade_no"` // 商户订单ID
 	TotalAmount string `json:"total_amount"` // 总金额
 	Subject     string `json:"subject"`      // 主题
@@ -36,26 +36,26 @@ type FaceToFacePayRequest struct {
 
 // 请求参数
 type Params struct {
-	PublicRequest
-	FaceToFacePayRequest
+	PublicRequestParams
+	BizContentRequestParams
 }
 
 // 转换成 map[string]string
 func (p *Params) ToMap() map[string]string {
 	var m map[string]string
-	f, _ := json.Marshal(p.FaceToFacePayRequest)
-	p.PublicRequest.BizContent = string(f)
-	str, _ := json.Marshal(p.PublicRequest)
+	f, _ := json.Marshal(p.BizContentRequestParams)
+	p.PublicRequestParams.BizContent = string(f)
+	str, _ := json.Marshal(p.PublicRequestParams)
 	_ = json.Unmarshal(str, &m)
 	return m
 }
-func (pub *PublicRequest) ToMap() map[string]string {
+func (pub *PublicRequestParams) ToMap() map[string]string {
 	var m map[string]string
 	f, _ := json.Marshal(pub)
 	_ = json.Unmarshal(f, &m)
 	return m
 }
-func (pub *PublicRequest) toQueryString() string {
+func (pub *PublicRequestParams) toQueryString() string {
 	var data []string
 	for k, v := range pub.ToMap() {
 		if v != "" {
@@ -89,9 +89,4 @@ func (p *Params) CommonPublicKeySign(AliPayPublicKey *rsa.PublicKey, AppPrivateK
 		panic(err)
 	}
 	p.Sign = url.QueryEscape(base64.StdEncoding.EncodeToString(SignByte))
-}
-
-// 证书公钥签名
-func (pub *PublicRequest) CertPublicKeySign() string {
-	return ""
 }

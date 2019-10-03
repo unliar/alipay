@@ -2,3 +2,5 @@ github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASu
 github.com/google/go-querystring v1.0.0/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=
 github.com/unliar/utils v0.0.0-20190807152312-5a27d3564681 h1:EdZx3TMBVwFTGd9DhmMjGiMdPgmncvM2gBM6g6b8qDc=
 github.com/unliar/utils v0.0.0-20190807152312-5a27d3564681/go.mod h1:8hBesIfRKnh4NRvi6mwe2xiUjj/+j2muDRz6h4y54hU=
+github.com/unliar/utils v0.0.0-20191003063639-9586e9b3129e h1:VyrjQVYdbm8my4L71648VMtKWk3fYlo8uavmJGj7frc=
+github.com/unliar/utils v0.0.0-20191003063639-9586e9b3129e/go.mod h1:5Q0s9hwo2oo/pYHCrYFRy0XAg4fgRskgyE0lTkUAlDI=

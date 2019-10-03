@@ -21,9 +21,9 @@ type Client struct {
 }
 
 // 预下单接口
-func (c *Client) TradePreCreate(p FaceToFacePayRequest) {
+func (c *Client) TradePreCreate(p BizContentRequestParams) {
 	v := Params{
-		PublicRequest: PublicRequest{
+		PublicRequestParams: PublicRequestParams{
 			AppID:     c.AppID,
 			Method:    AlipayTradePrecreateMethodName,
 			Format:    DefaultFormat,
@@ -34,7 +34,7 @@ func (c *Client) TradePreCreate(p FaceToFacePayRequest) {
 			Timestamp: time.Now().Format(DefaultTimeFormat),
 			Version:   DefaultVersion,
 		},
-		FaceToFacePayRequest: p,
+		BizContentRequestParams: p,
 	}
 	// 获取签名
 	v.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey)
