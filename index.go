@@ -3,7 +3,7 @@ package alipay
 import (
 	"crypto/rsa"
 	"fmt"
-	"github.com/google/go-querystring/query"
+	"github.com/unliar/utils/go/http"
 	"time"
 )
 
@@ -20,17 +20,18 @@ type Client struct {
 
 // 预下单接口
 func (c *Client) TradePreCreate() {
-	v := PublicRequest{
-		AppID:     c.AppID,
-		Method:    AlipayTradePrecreateMethodName,
-		Format:    DefaultFormat,
-		Charset:   DefaultCharset,
-		SignType:  "RSA2",
-		Sign:      "",
-		Timestamp: time.Now().Format(DefaultTimeFormat),
-		Version:   DefaultVersion,
-		NotifyURL: "https://happysooner.com/api/v1/pay/alipay/hook",
-		BizContent: &FaceToFacePayRequest{
+	v := Params{
+		PublicRequest: PublicRequest{
+			AppID:     c.AppID,
+			Method:    AlipayTradePrecreateMethodName,
+			Format:    DefaultFormat,
+			Charset:   DefaultCharset,
+			SignType:  "RSA2",
+			Sign:      "",
+			Timestamp: time.Now().Format(DefaultTimeFormat),
+			Version:   DefaultVersion,
+		},
+		FaceToFacePayRequest: FaceToFacePayRequest{
 			OutTradeNo:  "d88da8d8ad8a8d8a8d8",
 			Subject:     "测试支付",
 			TotalAmount: "1.11",
@@ -39,9 +40,9 @@ func (c *Client) TradePreCreate() {
 	// 获取签名
 	v.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey)
 	// 转为querystring
-	str, err := query.Values(v)
-	if err != nil {
-		fmt.Println("err")
-	}
+	str := v.toQueryString()
 	fmt.Println(str)
+	url := fmt.Sprintf("%s?%s", AlipayTradePrecreateURL, str)
+	res, _ := http.Get(url, nil, nil)
+	fmt.Println(res)
 }

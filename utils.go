@@ -4,14 +4,12 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"fmt"
 )
 
 // 字符转公共key
 func ConvertStrToPKCS1PublicKey(s string) *rsa.PublicKey {
 	block, _ := pem.Decode([]byte(s))
 	key, _ := x509.ParsePKIXPublicKey(block.Bytes)
-	fmt.Println("pub")
 	switch pub := key.(type) {
 	case *rsa.PublicKey:
 		return pub
