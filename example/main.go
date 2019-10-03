@@ -1,6 +1,10 @@
 package main
 
-import "github.com/unliar/alipay"
+import (
+	"fmt"
+	"github.com/unliar/alipay"
+	ustring "github.com/unliar/utils/go/string"
+)
 
 const AliPayPublicKey = `
 -----BEGIN PUBLIC KEY-----
@@ -18,8 +22,27 @@ func main() {
 
 	c := alipay.Client{
 		AppID:           "2019092667839325",
-		AliPayPublicKey: alipay.ConvertStrToPKCS1PublicKey(AliPayPublicKey),
-		AppPrivateKey:   alipay.ConvertStrToPKCS1PrivateKey(AppPrivateKey),
+		AliPayPublicKey: ustring.ConvertStrToPKCS1PublicKey(AliPayPublicKey),
+		AppPrivateKey:   ustring.ConvertStrToPKCS1PrivateKey(AppPrivateKey),
+		NotifyURL:       "https://happysooner.com/api/v1/pay/alipay/hook",
+		SignType:        "RSA2",
 	}
-	c.TradePreCreate()
+	res, err := c.TradePreCreate(alipay.BizContentRequestParams{
+		OutTradeNo:  "99299dd392ssss392dddd93929iid",
+		TotalAmount: "1.21",
+		Subject:     "王一鸣首席前端工程师",
+	})
+	if err != nil {
+		fmt.Println("请求失败", err)
+		return
+	}
+
+	fmt.Println("信息", res.AlipayTradePrecreateResponse)
+	if res.AlipayTradePrecreateResponse.Code == "10000" {
+		fmt.Println("请求成功")
+		fmt.Println("二维码地址", res.AlipayTradePrecreateResponse.QrCode)
+		fmt.Println("商家订单", res.AlipayTradePrecreateResponse.OutTradeNo)
+		return
+	}
+	fmt.Println("订单请求失败", res.AlipayTradePrecreateResponse.Code, res.AlipayTradePrecreateResponse.SubCode)
 }
