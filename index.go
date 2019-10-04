@@ -25,33 +25,7 @@ type Client struct {
 
 // 预下单接口
 func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateResponse, error) {
-	v := Params{
-		PublicRequestParams: PublicRequestParams{
-			AppID:     c.AppID,
-			Method:    AlipayTradePrecreateMethodName,
-			Format:    DefaultFormat,
-			Charset:   DefaultCharset,
-			SignType:  c.SignType,
-			NotifyURL: c.NotifyURL,
-			Timestamp: time.Now().Format(DefaultTimeFormat),
-			Version:   DefaultVersion,
-		},
-		BizContentRequestParams: p,
-	}
-
-	//签名 新版
-	mm := ali.M{}
-	m := v.ToMap()
-	for k, v := range m {
-		if v != "" {
-			mm[k] = v
-		}
-	}
-	sign, _ := mm.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, "RSA2")
-	mm["sign"] = sign
-	qs := mm.ToQueryString(true, true)
-	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
-	res, err := http.Get(url, nil, nil)
+	res, err := c.DoRequest(AlipayTradePrecreateMethodName, p)
 	fmt.Println("qqq", res)
 	if err != nil {
 		return &TradePreCreateResponse{}, err
@@ -63,10 +37,22 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 
 // 查询订单接口
 func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, error) {
+
+	res, err := c.DoRequest(AlipayTradeQueryMethodName, p)
+	if err != nil {
+		return &TradeQueryResponse{}, err
+	}
+	var tpr TradeQueryResponse
+	_ = json.Unmarshal([]byte(res), &tpr)
+	return &tpr, nil
+}
+
+// 通用请求接口
+func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, error) {
 	v := Params{
 		PublicRequestParams: PublicRequestParams{
 			AppID:     c.AppID,
-			Method:    AlipayTradeQueryMethodName,
+			Method:    method,
 			Format:    DefaultFormat,
 			Charset:   DefaultCharset,
 			SignType:  c.SignType,
@@ -91,14 +77,7 @@ func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, err
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
 	res, err := http.Get(url, nil, nil)
 	if err != nil {
-		return &TradeQueryResponse{}, err
+		return "", err
 	}
-	var tpr TradeQueryResponse
-	_ = json.Unmarshal([]byte(res), &tpr)
-	return &tpr, nil
-}
-
-// 通用请求接口
-func (c *Client) DoRequest(method string, biz *BizContentRequestParams) (string, error) {
-	return "", nil
+	return res, nil
 }
