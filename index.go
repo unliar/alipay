@@ -97,3 +97,8 @@ func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, err
 	_ = json.Unmarshal([]byte(res), &tpr)
 	return &tpr, nil
 }
+
+// 通用请求接口
+func (c *Client) DoRequest(method string, biz *BizContentRequestParams) (string, error) {
+	return "", nil
+}
