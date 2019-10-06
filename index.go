@@ -26,7 +26,6 @@ type Client struct {
 // 预下单接口
 func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateResponse, error) {
 	res, err := c.DoRequest(AlipayTradePrecreateMethodName, p)
-	fmt.Println("qqq", res)
 	if err != nil {
 		return &TradePreCreateResponse{}, err
 	}
@@ -37,7 +36,6 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 
 // 查询订单接口
 func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, error) {
-
 	res, err := c.DoRequest(AlipayTradeQueryMethodName, p)
 	if err != nil {
 		return &TradeQueryResponse{}, err
