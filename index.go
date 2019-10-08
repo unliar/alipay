@@ -69,7 +69,7 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, er
 			mm[k] = v
 		}
 	}
-	sign, _ := mm.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, "RSA2")
+	sign, _ := mm.CommonPublicKeySign(c.AliPayPublicKey, c.AppPrivateKey, c.SignType)
 	mm["sign"] = sign
 	qs := mm.ToQueryString(true, true)
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
