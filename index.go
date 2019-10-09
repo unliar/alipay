@@ -2,6 +2,7 @@ package alipay
 
 import (
 	"crypto/rsa"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	ali "github.com/unliar/utils/go/alipay"
@@ -78,4 +79,23 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, er
 		return "", err
 	}
 	return res, nil
+}
+
+// 检查签名
+func (c *Client) CheckSign(signStr, sign string) bool {
+	signByte, err := base64.StdEncoding.DecodeString(sign)
+	if err != nil {
+		return false
+	}
+	hash, cto := ali.GetSignOpsBySignType(c.SignType)
+	_, err = hash.Write([]byte(signStr))
+	if err != nil {
+		return false
+	}
+	hashByte := hash.Sum(nil)
+	err = rsa.VerifyPKCS1v15(c.AliPayPublicKey, cto, hashByte, signByte)
+	if err != nil {
+		return false
+	}
+	return true
 }
