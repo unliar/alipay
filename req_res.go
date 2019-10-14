@@ -2,6 +2,10 @@ package alipay
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/url"
+	"sort"
+	"strings"
 )
 
 // 公共请求参数
@@ -66,4 +70,20 @@ type TradeQueryResponse struct {
 		TotalAmount string `json:"total_amount"`  // 总金额
 		BuyerUserID string `json:"buyer_user_id"` // 买家金额
 	} `json:"alipay_trade_query_response"`
+}
+
+// 原始请求字符转换成签名字符串
+func SignRawStrConvert(rawStr string) string {
+	var signStrArr []string
+	// 签名验证
+	str, _ := url.PathUnescape(rawStr)
+	v, _ := url.ParseQuery(str)
+	for k, item := range v {
+		if k != "sign" && k != "sign_type" && len(item) > 0 {
+			fmt.Println(k, item[0])
+			signStrArr = append(signStrArr, fmt.Sprintf("%s=%s", k, item[0]))
+		}
+	}
+	sort.Strings(signStrArr)
+	return strings.Join(signStrArr, "&")
 }

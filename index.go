@@ -83,12 +83,13 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, er
 
 // 检查签名
 func (c *Client) CheckSign(signStr, sign string) bool {
+	str := SignRawStrConvert(signStr)
 	signByte, err := base64.StdEncoding.DecodeString(sign)
 	if err != nil {
 		return false
 	}
 	hash, cto := ali.GetSignOpsBySignType(c.SignType)
-	_, err = hash.Write([]byte(signStr))
+	_, err = hash.Write([]byte(str))
 	if err != nil {
 		return false
 	}
