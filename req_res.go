@@ -73,17 +73,19 @@ type TradeQueryResponse struct {
 }
 
 // 原始请求字符转换成签名字符串
-func SignRawStrConvert(rawStr string) string {
+func SignRawStrConvert(rawStr string) (str, sign string) {
 	var signStrArr []string
+	var signStr string
 	// 签名验证
-	str, _ := url.PathUnescape(rawStr)
-	v, _ := url.ParseQuery(str)
+	v, _ := url.ParseQuery(rawStr)
 	for k, item := range v {
 		if k != "sign" && k != "sign_type" && len(item) > 0 {
-			fmt.Println(k, item[0])
 			signStrArr = append(signStrArr, fmt.Sprintf("%s=%s", k, item[0]))
+		}
+		if k == "sign" {
+			signStr = item[0]
 		}
 	}
 	sort.Strings(signStrArr)
-	return strings.Join(signStrArr, "&")
+	return strings.Join(signStrArr, "&"), signStr
 }
