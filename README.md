@@ -8,7 +8,7 @@
 2. TradeQuery 查询订单接口 - 已线上测试通过
 3. CheckSign 签名验证接口 - 已线上测试通过
 4. TradeCancel 交易撤销接口 - 线上未测试
-5. TadeRefund  交易退款 - 未完成
+5. TradeRefund  交易退款 - 未完成
 ## Demo
 
 > 使用案例见 example 文件夹
