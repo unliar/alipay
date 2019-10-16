@@ -26,22 +26,44 @@ type Client struct {
 
 // 预下单接口
 func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateResponse, error) {
+	var tpr TradePreCreateResponse
 	res, err := c.DoRequest(AlipayTradePrecreateMethodName, p)
 	if err != nil {
-		return &TradePreCreateResponse{}, err
+		return &tpr, err
 	}
-	var tpr TradePreCreateResponse
 	_ = json.Unmarshal([]byte(res), &tpr)
 	return &tpr, nil
 }
 
 // 查询订单接口
 func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, error) {
+	var tpr TradeQueryResponse
 	res, err := c.DoRequest(AlipayTradeQueryMethodName, p)
 	if err != nil {
-		return &TradeQueryResponse{}, err
+		return &tpr, err
 	}
-	var tpr TradeQueryResponse
+	_ = json.Unmarshal([]byte(res), &tpr)
+	return &tpr, nil
+}
+
+// 撤销订单接口
+func (c *Client) TradeCancel(p BizContentRequestParams) (*TradeCancelResponse, error) {
+	var tpr TradeCancelResponse
+	res, err := c.DoRequest(AlipayTradeCancelMethodName, p)
+	if err != nil {
+		return &tpr, err
+	}
+	_ = json.Unmarshal([]byte(res), &tpr)
+	return &tpr, nil
+}
+
+// 交易退款
+func (c *Client) TradeRefund(p BizContentRequestParams) (*TradeCancelResponse, error) {
+	var tpr TradeCancelResponse
+	res, err := c.DoRequest(AlipayTradeRefundMethodName, p)
+	if err != nil {
+		return &tpr, err
+	}
 	_ = json.Unmarshal([]byte(res), &tpr)
 	return &tpr, nil
 }

@@ -9,6 +9,12 @@ const AlipayTradePrecreateMethodName = "alipay.trade.precreate"
 // 统一收单线下交易查询  接口名称
 const AlipayTradeQueryMethodName = "alipay.trade.query"
 
+// 统一收单线下撤销  接口名称
+const AlipayTradeCancelMethodName = "alipay.trade.cancel"
+
+// 统一收单同步退款  接口名称
+const AlipayTradeRefundMethodName = "alipay.trade.refund"
+
 // 格式
 const DefaultFormat = "JSON"
 

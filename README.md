@@ -1,7 +1,14 @@
 # alipy
 
-a sdk for FACE_TO_FACE_PAYMENT of alipay
+支付宝当面付sdk,目前只实现了普通公钥模式
 
-## example
+> https://docs.open.alipay.com/194/105072
+## API
+1. TradePreCreate 预下单接口 - 已线上测试通过
+2. TradeQuery 查询订单接口 - 已线上测试通过
+3. CheckSign 签名验证接口 - 已线上测试通过
+4. TradeCancel 交易撤销接口 - 线上未测试
+5. TadeRefund  交易退款 - 未完成
+## Demo
 
 > 使用案例见 example 文件夹

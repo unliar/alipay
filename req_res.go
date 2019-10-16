@@ -25,9 +25,11 @@ type PublicRequestParams struct {
 
 // 商家请求参数
 type BizContentRequestParams struct {
-	OutTradeNo  string `json:"out_trade_no,omitempty"` // 商户订单ID
-	TotalAmount string `json:"total_amount,omitempty"` // 总金额
-	Subject     string `json:"subject,omitempty"`      // 主题
+	OutTradeNo   string `json:"out_trade_no,omitempty"`  // 商户订单ID
+	TotalAmount  string `json:"total_amount,omitempty"`  // 总金额
+	Subject      string `json:"subject,omitempty"`       // 主题
+	RefundAmount string `json:"refund_amount,omitempty"` // 退款请求金额
+
 }
 
 // 请求参数
@@ -70,6 +72,20 @@ type TradeQueryResponse struct {
 		TotalAmount string `json:"total_amount"`  // 总金额
 		BuyerUserID string `json:"buyer_user_id"` // 买家金额
 	} `json:"alipay_trade_query_response"`
+}
+
+// 交易撤销结果
+type TradeCancelResponse struct {
+	AlipayTradeCancelResponse struct {
+		PublicResponse
+		OutTradeNo         string `json:"out_trade_no,omitempty"`         // 商家订单号
+		TradeNo            string `json:"trade_no,omitempty"`             // 支付宝订单号
+		RetryFlag          string `json:"retry_flag,omitempty"`           // 是否需要重试
+		Action             string `json:"action,omitempty"`               // close：交易未支付，触发关闭交易动作，无退款；refund：交易已支付，触发交易退款动作；未返回：未查询到交易，或接口调用失败；
+		GmtRefundPay       string `json:"gmt_refund_pay,omitempty"`       // 当撤销产生了退款时，返回退款时间；
+		RefundSettlementID string `json:"refund_settlement_id,omitempty"` // 是否需要重试
+
+	} `json:"alipay_trade_cancel_response"`
 }
 
 // 原始请求字符转换成签名字符串
