@@ -106,8 +106,6 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, er
 // 检查签名
 func (c *Client) CheckSign(signReqStr string) bool {
 	str, sign := SignRawStrConvert(signReqStr)
-	fmt.Println("待签名字符串 ", str)
-	fmt.Println("签名字符串", sign)
 	signByte, err := base64.StdEncoding.DecodeString(sign)
 	if err != nil {
 		fmt.Println(" base64 err==>", err)
