@@ -21,7 +21,7 @@ MIIEpAIBAAKCAQEAkquFFuOlLI4uV5gU4OdU8H+A6GZSx7kXjEtvIxVLQBNdAbfoEW9ZM0e3ECsvgwj2
 func main() {
 
 	c := alipay.Client{
-		AppID:           "2019092667839325",
+		AppID:           "20190992667839325",
 		AliPayPublicKey: ustring.ConvertStrToPKCS1PublicKey(AliPayPublicKey),
 		AppPrivateKey:   ustring.ConvertStrToPKCS1PrivateKey(AppPrivateKey),
 		NotifyURL:       "https://happysooner.com/api/v1/pay/alipay/hook",
