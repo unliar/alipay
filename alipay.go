@@ -31,7 +31,7 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 	if err != nil {
 		return &tpr, err
 	}
-	_ = json.Unmarshal([]byte(res), &tpr)
+	_ = json.Unmarshal(res, &tpr)
 	return &tpr, nil
 }
 
@@ -42,7 +42,7 @@ func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, err
 	if err != nil {
 		return &tpr, err
 	}
-	_ = json.Unmarshal([]byte(res), &tpr)
+	_ = json.Unmarshal(res, &tpr)
 	return &tpr, nil
 }
 
@@ -53,7 +53,7 @@ func (c *Client) TradeCancel(p BizContentRequestParams) (*TradeCancelResponse, e
 	if err != nil {
 		return &tpr, err
 	}
-	_ = json.Unmarshal([]byte(res), &tpr)
+	_ = json.Unmarshal(res, &tpr)
 	return &tpr, nil
 }
 
@@ -64,12 +64,12 @@ func (c *Client) TradeRefund(p BizContentRequestParams) (*TradeCancelResponse, e
 	if err != nil {
 		return &tpr, err
 	}
-	_ = json.Unmarshal([]byte(res), &tpr)
+	_ = json.Unmarshal(res, &tpr)
 	return &tpr, nil
 }
 
 // 通用请求接口
-func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, error) {
+func (c *Client) DoRequest(method string, p BizContentRequestParams) ([]byte, error) {
 	v := Params{
 		PublicRequestParams: PublicRequestParams{
 			AppID:     c.AppID,
@@ -98,7 +98,7 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) (string, er
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
 	res, err := http.Get(url, nil, nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	return res, nil
 }

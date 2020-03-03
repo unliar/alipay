@@ -4,3 +4,5 @@ github.com/unliar/utils v0.0.7 h1:FjIwENaCxWVw4Qm2UaHlyLlf5mJvqL3K0OxDAApEPZU=
 github.com/unliar/utils v0.0.7/go.mod h1:5Q0s9hwo2oo/pYHCrYFRy0XAg4fgRskgyE0lTkUAlDI=
 github.com/unliar/utils v0.0.8 h1:ven5BXSEuJx6q0HoIK8LuaX5hV7LBRqIi/KHe3t/pVo=
 github.com/unliar/utils v0.0.8/go.mod h1:5Q0s9hwo2oo/pYHCrYFRy0XAg4fgRskgyE0lTkUAlDI=
+github.com/unliar/utils v0.1.0 h1:hTzwz7aIBsaPhLvJZa0kcDQLTSoWaQL820+dWT3RKOc=
+github.com/unliar/utils v0.1.0/go.mod h1:5Q0s9hwo2oo/pYHCrYFRy0XAg4fgRskgyE0lTkUAlDI=
