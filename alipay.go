@@ -27,7 +27,7 @@ type Client struct {
 // 预下单接口
 func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateResponse, error) {
 	var tpr TradePreCreateResponse
-	res, err := c.DoRequest(AlipayTradePrecreateMethodName, p)
+	res, err := c.DoRequest(AlipayTradePrecreateMethodName, p, false)
 	if err != nil {
 		return &tpr, err
 	}
@@ -35,10 +35,17 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 	return &tpr, nil
 }
 
+// 网站支付下单接口 返回一个奇怪的网址
+func (c *Client) TradePagePay(p BizContentRequestParams) ([]byte, error) {
+	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
+	res, err := c.DoRequest(AlipayTradePagePay, p, true)
+	return res, err
+}
+
 // 查询订单接口
 func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, error) {
 	var tpr TradeQueryResponse
-	res, err := c.DoRequest(AlipayTradeQueryMethodName, p)
+	res, err := c.DoRequest(AlipayTradeQueryMethodName, p, false)
 	if err != nil {
 		return &tpr, err
 	}
@@ -49,7 +56,7 @@ func (c *Client) TradeQuery(p BizContentRequestParams) (*TradeQueryResponse, err
 // 撤销订单接口
 func (c *Client) TradeCancel(p BizContentRequestParams) (*TradeCancelResponse, error) {
 	var tpr TradeCancelResponse
-	res, err := c.DoRequest(AlipayTradeCancelMethodName, p)
+	res, err := c.DoRequest(AlipayTradeCancelMethodName, p, false)
 	if err != nil {
 		return &tpr, err
 	}
@@ -60,7 +67,7 @@ func (c *Client) TradeCancel(p BizContentRequestParams) (*TradeCancelResponse, e
 // 交易退款
 func (c *Client) TradeRefund(p BizContentRequestParams) (*TradeCancelResponse, error) {
 	var tpr TradeCancelResponse
-	res, err := c.DoRequest(AlipayTradeRefundMethodName, p)
+	res, err := c.DoRequest(AlipayTradeRefundMethodName, p, false)
 	if err != nil {
 		return &tpr, err
 	}
@@ -69,7 +76,7 @@ func (c *Client) TradeRefund(p BizContentRequestParams) (*TradeCancelResponse, e
 }
 
 // 通用请求接口
-func (c *Client) DoRequest(method string, p BizContentRequestParams) ([]byte, error) {
+func (c *Client) DoRequest(method string, p BizContentRequestParams, fromBrowser bool) ([]byte, error) {
 	v := Params{
 		PublicRequestParams: PublicRequestParams{
 			AppID:     c.AppID,
@@ -96,6 +103,10 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams) ([]byte, er
 	mm["sign"] = sign
 	qs := mm.ToQueryString(true, true)
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
+	if fromBrowser {
+		fmt.Println("如果当前是想从前端发起请求,那么不走服务器,支付宝网站支付想从前端跳转")
+		return []byte(url), nil
+	}
 	res, err := http.Get(url, nil, nil)
 	if err != nil {
 		return nil, err

@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/unliar/alipay/tree/master.svg?style=svg)](https://circleci.com/gh/unliar/alipay/tree/master)
 
-支付宝当面付sdk,目前只实现了普通公钥模式
+支付宝付款sdk,目前只实现了当面付的普通公钥模式
 
 > https://docs.open.alipay.com/194/105072
 ## API

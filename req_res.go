@@ -29,7 +29,7 @@ type BizContentRequestParams struct {
 	TotalAmount  string `json:"total_amount,omitempty"`  // 总金额
 	Subject      string `json:"subject,omitempty"`       // 主题
 	RefundAmount string `json:"refund_amount,omitempty"` // 退款请求金额
-
+	ProductCode  string `json:"product_code,omitempty"`  // 销售产品码 - 网站支付默认 FAST_INSTANT_TRADE_PAY
 }
 
 // 请求参数

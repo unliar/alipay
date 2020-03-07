@@ -1,3 +1,4 @@
+// 这里是支付宝常量接口定义
 package alipay
 
 // 统一收单线下请求地址
@@ -14,6 +15,10 @@ const AlipayTradeCancelMethodName = "alipay.trade.cancel"
 
 // 统一收单同步退款  接口名称
 const AlipayTradeRefundMethodName = "alipay.trade.refund"
+
+// https://opendocs.alipay.com/pre-open/270/105900  2020-03-07 新增电脑网站支付接口
+// 统一收单下单并支付页面接口
+const AlipayTradePagePay = "alipay.trade.page.pay"
 
 // 格式
 const DefaultFormat = "JSON"
