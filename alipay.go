@@ -35,11 +35,11 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 	return &tpr, nil
 }
 
-// 网站支付下单接口 返回一个奇怪的网址
-func (c *Client) TradePagePay(p BizContentRequestParams) ([]byte, error) {
+// 网站支付下单接口
+func (c *Client) TradePagePay(p BizContentRequestParams) (string, error) {
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
 	res, err := c.DoRequest(AlipayTradePagePay, p, true)
-	return res, err
+	return string(res), err
 }
 
 // 查询订单接口
