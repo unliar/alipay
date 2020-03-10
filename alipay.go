@@ -29,7 +29,7 @@ type Client struct {
 func NewClient(c Client) *Client {
 	return &Client{
 		AppID:               c.AppID,
-		NotifyURL:           c.AppID,
+		NotifyURL:           c.NotifyURL,
 		SignType:            c.SignType,
 		EndpointURL:         c.EndpointURL,
 		AliPayPublicKey:     c.AliPayPublicKey,
