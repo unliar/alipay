@@ -21,6 +21,7 @@ type PublicRequestParams struct {
 	NotifyURL    string `url:"notify_url,omitempty" json:"notify_url,omitempty"`         // 回调地址
 	AppAuthToken string `url:"app_auth_token,omitempty" json:"app_auth_token,omitempty"` // 应用授权
 	BizContent   string `url:"biz_content" json:"biz_content"`                           // 特定请求参数
+	ReturnURL    string `json:"return_url,omitempty" url:"return_url,omitempty"`         // 移动支付成功返的地址
 }
 
 // 商家请求参数
@@ -30,6 +31,7 @@ type BizContentRequestParams struct {
 	Subject      string `json:"subject,omitempty"`       // 主题
 	RefundAmount string `json:"refund_amount,omitempty"` // 退款请求金额
 	ProductCode  string `json:"product_code,omitempty"`  // 销售产品码 - 网站支付默认 FAST_INSTANT_TRADE_PAY
+	QuitURL      string `json:"quit_url,omitempty"`      // 用户中途退出返回商户网站地址
 }
 
 // 请求参数

@@ -22,6 +22,28 @@ type Client struct {
 	AppPublicKeyCert    string // app公钥证书
 	AliPayPublicKeyCert string // 支付宝公钥证书
 	AliPayRootCert      string // 支付宝根证书
+	ReturnURL           string // wap 支付成功返回地址
+}
+
+// NewClient 新实例化
+func NewClient(c Client) *Client {
+	return &Client{
+		AppID:               c.AppID,
+		NotifyURL:           c.AppID,
+		SignType:            c.SignType,
+		EndpointURL:         c.EndpointURL,
+		AliPayPublicKey:     c.AliPayPublicKey,
+		AppPrivateKey:       c.AppPrivateKey,
+		AppPublicKeyCert:    c.AppPublicKeyCert,
+		AliPayPublicKeyCert: c.AliPayPublicKeyCert,
+		AliPayRootCert:      c.AliPayRootCert,
+		ReturnURL:           c.ReturnURL,
+	}
+}
+
+// wap 支付设置成功支付回跳地址
+func (c *Client) SetReturnURL(str string) {
+	c.ReturnURL = str
 }
 
 // 预下单接口
@@ -39,6 +61,14 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 func (c *Client) TradePagePay(p BizContentRequestParams) (string, error) {
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
 	res, err := c.DoRequest(AlipayTradePagePay, p, true)
+	return string(res), err
+}
+
+// wap下单接口
+func (c *Client) TradeWapPay(p BizContentRequestParams, ReturnUrl string) (string, error) {
+	p.ProductCode = "QUICK_WAP_WAY"
+	c.SetReturnURL(ReturnUrl)
+	res, err := c.DoRequest(AlipayTradeWapPay, p, true)
 	return string(res), err
 }
 
@@ -87,6 +117,7 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams, fromBrowser
 			NotifyURL: c.NotifyURL,
 			Timestamp: time.Now().Format(DefaultTimeFormat),
 			Version:   DefaultVersion,
+			ReturnURL: c.ReturnURL,
 		},
 		BizContentRequestParams: p,
 	}

@@ -20,6 +20,9 @@ const AlipayTradeRefundMethodName = "alipay.trade.refund"
 // 统一收单下单并支付页面接口
 const AlipayTradePagePay = "alipay.trade.page.pay"
 
+// 统一收到wap支付接口
+const AlipayTradeWapPay = "alipay.trade.wap.pay"
+
 // 格式
 const DefaultFormat = "JSON"
 
