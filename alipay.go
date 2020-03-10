@@ -135,7 +135,7 @@ func (c *Client) DoRequest(method string, p BizContentRequestParams, fromBrowser
 	qs := mm.ToQueryString(true, true)
 	url := fmt.Sprintf("%s?%s", c.EndpointURL, qs)
 	if fromBrowser {
-		fmt.Println("如果当前是想从前端发起请求,那么不走服务器,支付宝网站支付想从前端跳转")
+		fmt.Println("当前请求不走服务器请求,只返回一个网址,请把网址填入你的网页iframe src")
 		return []byte(url), nil
 	}
 	res, err := http.Get(url, nil, nil)
