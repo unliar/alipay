@@ -58,8 +58,9 @@ func (c *Client) TradePreCreate(p BizContentRequestParams) (*TradePreCreateRespo
 }
 
 // 网站支付下单接口
-func (c *Client) TradePagePay(p BizContentRequestParams) (string, error) {
+func (c *Client) TradePagePay(p BizContentRequestParams, ReturnUrl string) (string, error) {
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
+	c.SetReturnURL(ReturnUrl) // 设置成功支付的返回地址
 	res, err := c.DoRequest(AlipayTradePagePay, p, true)
 	return string(res), err
 }
